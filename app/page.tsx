@@ -1,65 +1,143 @@
+"use client";
+
+import Info from "@/components/info/Info";
+import Navbar from "@/components/navbar/Navbar";
+import { useTheme } from "next-themes";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [mounted, setMounted] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const theme = useTheme();
+  const year = new Date().getFullYear();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
+
+  if (!mounted) return null;
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="relative bg-white dark:bg-gray-950 overflow-hidden">
+      {/* Mouse Light Effect */}
+      <div
+        className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300"
+        style={{
+          background: `radial-gradient(800px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(59, 130, 246, 0.15), transparent 50%)`,
+        }}
+      />
+
+      {/* Fixed Navbar */}
+      <header className="fixed w-full top-0 z-50 backdrop-blur-md bg-white/90 dark:bg-gray-900/90 border-b border-gray-200 dark:border-gray-700 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-20">
+            {/* Logo and Name */}
+            <div className="flex items-center gap-4">
+              <div className="relative group">
+                <div className="absolute -inset-0.5 bg-linear-to-r from-cyan-500 to-blue-500 rounded-full blur opacity-60 group-hover:opacity-100 transition duration-300"></div>
+                <Image
+                  src="/avatar.png"
+                  alt="Profile Picture"
+                  width={50}
+                  height={50}
+                  className="relative rounded-full border-2 border-white dark:border-gray-800 shadow-md"
+                />
+              </div>
+              <div className="hidden sm:block">
+                <p className="text-xl font-bold bg-linear-to-r from-cyan-500 to-blue-600 bg-clip-text text-transparent">
+                  Jeisson Araque
+                </p>
+                <p className="text-xs text-gray-600 dark:text-gray-300">
+                  Full Stack Developer
+                </p>
+              </div>
+            </div>
+
+            {/* Navigation */}
+            <Navbar />
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="pt-20">
+        <Info />
       </main>
+
+      {/* Footer */}
+      <footer className="dark:bg-gray-950 text-white py-8 border-t border-gray-200 dark:border-gray-700">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <p className="text-gray-700 dark:text-gray-300">
+            © {year} Jeisson Araque. Todos los derechos reservados.
+          </p>
+          <div className="flex justify-center gap-6 mt-4">
+            <a
+              href="https://github.com/jearx85"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+            >
+              <Image
+                src={
+                  theme.theme === "dark"
+                    ? "/icons/github_dark.png"
+                    : "/icons/github.png"
+                }
+                alt="GitHub"
+                width={30}
+                height={30}
+                className="cursor-pointer"
+              />
+            </a>
+
+            <a
+              href="https://www.linkedin.com/in/jeisson-araque/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+            >
+              <Image
+                src={
+                  theme.theme === "dark"
+                    ? "/icons/linkedin_dark.png"
+                    : "/icons/linkedin2.png"
+                }
+                alt="LinkedIn"
+                width={30}
+                height={30}
+                className="cursor-pointer"
+              />
+            </a>
+
+            <a href="mailto:jearx85@gmail.com" aria-label="Email">
+              <Image
+                src={
+                  theme.theme === "dark"
+                    ? "/icons/email_dark.png"
+                    : "/icons/email.png"
+                }
+                alt="Email"
+                width={30}
+                height={30}
+                className="cursor-pointer"
+              />
+            </a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
