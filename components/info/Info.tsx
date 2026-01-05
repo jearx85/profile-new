@@ -48,7 +48,7 @@ export default function Info() {
         <div className="max-w-6xl w-full p-8 md:p-16">
           <div className="flex flex-col md:flex-row items-center gap-12 md:gap-16">
             <div className="relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse"></div>
+              <div className="absolute -inset-1 bg-linear-to-r from-cyan-500 to-blue-500 rounded-full blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse"></div>
               <Image
                 src="/profile_pic_nobg.png"
                 alt="logo jeisson"
@@ -60,7 +60,7 @@ export default function Info() {
             </div>
 
             <div className="flex-1 text-center md:text-left">
-              <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-cyan-500 to-blue-600 bg-clip-text text-transparent animate-fade-in">
+              <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-linear-to-r from-cyan-500 to-blue-600 bg-clip-text text-transparent animate-fade-in">
                 Jeisson Araque
               </h1>
 
