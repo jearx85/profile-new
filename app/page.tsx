@@ -91,11 +91,7 @@ export default function Home() {
               aria-label="GitHub"
             >
               <Image
-                src={
-                  theme.theme === "dark"
-                    ? "/icons/github_dark.png"
-                    : "/icons/github.png"
-                }
+                src={theme.resolvedTheme === "dark" ? "/icons/github_dark.png" : "/icons/github.png"}
                 alt="GitHub"
                 width={30}
                 height={30}
@@ -110,11 +106,7 @@ export default function Home() {
               aria-label="LinkedIn"
             >
               <Image
-                src={
-                  theme.theme === "dark"
-                    ? "/icons/linkedin_dark.png"
-                    : "/icons/linkedin2.png"
-                }
+                src={theme.resolvedTheme === "dark" ? "/icons/linkedin_dark.png" : "/icons/linkedin2.png"}
                 alt="LinkedIn"
                 width={30}
                 height={30}
@@ -124,11 +116,7 @@ export default function Home() {
 
             <a href="mailto:jearx85@gmail.com" aria-label="Email">
               <Image
-                src={
-                  theme.theme === "dark"
-                    ? "/icons/email_dark.png"
-                    : "/icons/email.png"
-                }
+                src={theme.resolvedTheme === "dark" ? "/icons/email_dark.png" : "/icons/email.png"}
                 alt="Email"
                 width={30}
                 height={30}

@@ -16,9 +16,9 @@ export default function Navbar() {
   const navItems = [
     { name: 'Inicio', href: '#home' },
     { name: 'Sobre mí', href: '#about' },
-    { name: 'Habilidades', href: '#skills' },
+    { name: 'Experiencia', href: '#experience' },
+    { name: 'Stack', href: '#skills' },
     { name: 'Proyectos', href: '#projects' },
-    // { name: 'Contacto', href: '#contact' },
   ]
 
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -47,14 +47,14 @@ export default function Navbar() {
         ))}
         {mounted && (
           <div
-            className="relative group"
+            className="relative"
             onMouseEnter={() => setThemeMenuOpen(true)}
             onMouseLeave={() => setThemeMenuOpen(false)}
           >
-            <div className="flex items-center gap-2 p-1 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 overflow-hidden transition-all duration-300 group-hover:w-auto">
-              {/* Icono activo - siempre visible */}
+            <div className="flex items-center gap-2 p-1 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 overflow-hidden transition-all duration-300">
+              {/* Icono activo - siempre visible, toggle en táctil */}
               <button
-                onClick={() => setTheme(theme === 'light' ? 'light' : theme === 'dark' ? 'dark' : 'system')}
+                onClick={() => setThemeMenuOpen(!themeMenuOpen)}
                 className="p-2 rounded-md bg-cyan-500 text-white transition-all duration-300"
                 aria-label={`${theme} theme`}
               >
@@ -63,11 +63,11 @@ export default function Navbar() {
                 {theme === 'system' && <Monitor size={18} />}
               </button>
 
-              {/* Iconos inactivos - aparecen en hover */}
-              <div className="flex items-center gap-2 max-w-0 opacity-0 group-hover:max-w-xs group-hover:opacity-100 transition-all duration-300 overflow-hidden">
+              {/* Iconos inactivos - aparecen en hover o al tocar */}
+              <div className={`flex items-center gap-2 overflow-hidden transition-all duration-300 ${themeMenuOpen ? 'max-w-xs opacity-100' : 'max-w-0 opacity-0'}`}>
                 {theme !== 'light' && (
                   <button
-                    onClick={() => setTheme('light')}
+                    onClick={() => { setTheme('light'); setThemeMenuOpen(false); }}
                     className="p-2 rounded-md text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                     aria-label="Light theme"
                     title="Light"
@@ -77,7 +77,7 @@ export default function Navbar() {
                 )}
                 {theme !== 'dark' && (
                   <button
-                    onClick={() => setTheme('dark')}
+                    onClick={() => { setTheme('dark'); setThemeMenuOpen(false); }}
                     className="p-2 rounded-md text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                     aria-label="Dark theme"
                     title="Dark"
@@ -87,7 +87,7 @@ export default function Navbar() {
                 )}
                 {theme !== 'system' && (
                   <button
-                    onClick={() => setTheme('system')}
+                    onClick={() => { setTheme('system'); setThemeMenuOpen(false); }}
                     className="p-2 rounded-md text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                     aria-label="System theme"
                     title="System"
